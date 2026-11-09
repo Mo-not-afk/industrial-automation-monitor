@@ -1,0 +1,1 @@
+"""Simulated industrial process monitor."""

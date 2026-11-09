@@ -1,0 +1,1 @@
+{"holding_registers":{"0":{"name":"temperature_c","scale":0.1,"unit":"degC"},"1":{"name":"pressure_kpa","scale":1,"unit":"kPa"},"2":{"name":"motor_rpm","scale":1,"unit":"rpm"},"3":{"name":"tank_percent","scale":0.1,"unit":"percent"}},"input_registers":{"0":{"name":"supply_voltage_v","scale":0.1,"unit":"V"}}}
