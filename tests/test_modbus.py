@@ -1,4 +1,7 @@
 import unittest
+from unittest.mock import patch
+from contextlib import redirect_stdout
+from io import StringIO
 from plant_monitor.modbus import ModbusClient,ModbusSimulator
 from plant_monitor.process import Limits,alarms,decode_registers,tick
 
@@ -23,3 +26,7 @@ class ModbusTests(unittest.TestCase):
     def test_bad_count_and_timeout_rejected(self):
         with self.assertRaises(ValueError): decode_registers([1])
         with self.assertRaises(ValueError): ModbusClient(timeout=0)
+    def test_cli_smoke(self):
+        from plant_monitor.cli import main
+        with patch("sys.argv",["plant-monitor","--samples","2"]),redirect_stdout(StringIO()) as output: main()
+        self.assertEqual(output.getvalue().count('"source": "simulator"'),2)

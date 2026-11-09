@@ -11,7 +11,7 @@ Automation monitoring depends on bounded communications, correct register interp
 - Modbus TCP subset: read coils (FC01), discrete inputs (FC02), holding registers (FC03), input registers (FC04), write single coil (FC05), and write single register (FC06).
 - A local threaded simulator bound to loopback, process register map, and deterministic changing temperature, pressure, motor speed, and tank level.
 - Socket timeouts and malformed/exception response checks.
-- Threshold alarm evaluation, SQLite event/sample history, and FastAPI endpoints.
+- Threshold alarm evaluation, SQLite event/sample history, FastAPI endpoints, and a live browser dashboard.
 - pymodbus is declared as the maintained ecosystem dependency; the included minimal wire client is self-contained so the simulator/tests work without version-specific APIs.
 
 ## Architecture
@@ -40,11 +40,11 @@ plant-monitor --samples 10
 uvicorn plant_monitor.api:app --reload
 ```
 
-Open `/docs` for the REST schema. `/process` returns a simulator sample, `/history` gives chronological values, and `/events` lists threshold events. Example map: `examples/register_map.json`. Defaults bind only to `127.0.0.1` for the CLI simulator.
+Open `http://127.0.0.1:8000/` for the live dashboard and `/docs` for the REST schema. `/process` advances and returns a simulator sample, `/history` gives chronological values, and `/events` lists threshold events. Example map: `examples/register_map.json`. Defaults bind only to `127.0.0.1` for the CLI simulator.
 
 ## Tests
 
-Run `python scripts/run_tests.py` from an uninstalled checkout, or `python -m unittest discover -s tests -v` after installation. Three Modbus simulator integration tests passed locally. Two optional FastAPI endpoint tests were skipped because FastAPI, SQLAlchemy, and httpx were unavailable. No remote PLC or network is required.
+Run `python scripts/run_tests.py` from an uninstalled checkout, or `python -m unittest discover -s tests -v` after installation. Four tests passed locally, including a Modbus simulator integration and CLI smoke test. Two optional FastAPI endpoint tests were skipped because FastAPI and SQLAlchemy were unavailable. No remote PLC or network is required.
 
 ## Limitations and safety
 
